@@ -1,4 +1,4 @@
-![Icon](.assets\icon.png "Title")
+![Icon](.assets/icon.png "Title")
 # Clear-AzRG.ps1 
 
 `Clear-AzRG.ps1` is a PowerShell script designed to manage clean-up of resource groups in an Azure account. It connects to the specified Azure account, retrieves all resource groups, filters out any groups specified by the user, and then deletes the remaining groups after a specified timeout period.
