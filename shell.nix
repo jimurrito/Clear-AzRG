@@ -15,7 +15,7 @@
 { pkgs ? import <nixpkgs> {} }:
 
 pkgs.mkShell {
-  buildInputs = with pkgs; [ powershell vscode-extensions.ms-vscode.powershell ];
+  buildInputs = with pkgs; [ powershell];
 
   shellHook = ''
   pwsh && exit
