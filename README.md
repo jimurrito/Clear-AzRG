@@ -44,12 +44,14 @@ In this example, replace "your_subscription_id" and "your_tenant_id" with your a
 
 The script accepts the following parameters:
 
-| Parameter      | Data Type | Default Value | Description |
-| -------------- | --------- | ------------- | ----------- |
-| SubscriptionID | string    | --          | The subscription ID associated with the Azure account. This is a unique identifier that allows the script to target the correct Azure subscription. This parameter is mandatory. |
-| TenantID       | string    | --          | The tenant ID associated with the Azure account. This is a unique identifier that allows the script to target the correct Azure tenant. This parameter is mandatory. |
-| Exclude        | array     | --          | An array of resource group names that should be excluded from deletion. This allows you to protect certain resource groups from being deleted by the script. |
-| Timeout        | int       | 20            | The time to wait (in seconds) before starting the deletion process. This provides a buffer period for you to cancel the operation if necessary. |
+| Parameter      | Data Type | Default Value | Description                                                                                                                                                                      |
+| -------------- | --------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| SubscriptionID | string    | --            | The subscription ID associated with the Azure account. This is a unique identifier that allows the script to target the correct Azure subscription. This parameter is mandatory. |
+| TenantID       | string    | --            | The tenant ID associated with the Azure account. This is a unique identifier that allows the script to target the correct Azure tenant. This parameter is mandatory.             |
+| Exclude        | array     | --            | An array of resource group names that should be excluded from deletion. This allows you to protect certain resource groups from being deleted by the script.                     |
+| Timeout        | int       | 20            | The time to wait (in seconds) before starting the deletion process. This provides a buffer period for you to cancel the operation if necessary.                                  |
+| DeviceAuth     | switch    | false         | Determines if authentication should happen via DeviceAuthentication or WebAuth pop-out.                                                                                          |
+
 
 
 ## Run into any issues?

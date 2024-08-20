@@ -34,24 +34,42 @@ param (
     [Parameter(Mandatory = $true)][string] $SubscriptionID,
     [Parameter(Mandatory = $true)][string] $TenantID,
     [array] $Exclude,
-    [int] $Timeout = 20
+    [int] $Timeout = 20,
+    [switch] $DeviceAuth
 )
-
+#
+# Check if Az module is already installed
+if ((Get-InstalledModule Az.Accounts, Az.Resources).Count -ne 2) {
+    # not installed
+    Write-Warning "Az.Accounts and Az.Resources are required by this script. The following prompt will install this for you if you choose 'a'."
+    Install-Module Az.Accounts, Az.Resources -ErrorAction Stop
+}
+else {
+    Import-Module Az.Accounts, Az.Resources -ErrorAction stop | Out-Null
+}
+#
+#
 Write-Host "WARNING! RESOURCE GROUPS AND OTHER CONTROL-PLANE OBJECTS CAN NOT BE RECOVERED BY THE AZURE ENGINEERING TEAM(s); ONLY DATA-PLANE RESOURCES LIKE vDISKS! VMs, VMSS, AND SIMILAR OBJECTS WILL BE LOST FOREVER! USE AT YOUR OWN RISK!!" -ForegroundColor Red
-
+#
 # Connect + Set proper context
-Connect-AzAccount -Tenant $TenantID -subscription $SubscriptionID -ErrorAction Stop | Out-Null
+if ($DeviceAuth) {
+    Connect-AzAccount -Tenant $TenantID -subscription $SubscriptionID -ErrorAction Stop -UseDeviceAuthentication
+}
+else {
+    Connect-AzAccount -Tenant $TenantID -subscription $SubscriptionID -ErrorAction Stop | Out-Null
+}
+#
 set-azcontext -tenant $TenantID -subscription $SubscriptionID -ErrorAction Stop | Out-Null
-
+#
 # Get / Filter RGs
 $RGs_nExc = (Get-AzResourceGroup -ErrorAction Stop) | Where-Object { $_.ResourceGroupName -notin $Exclude }
-
+#
 # Verbose
 write-host ("Excluded Resource Groups:" ) -ForegroundColor Green
-$Exclude
-
+write-object $Exclude
+#
 # check to see if there are any resouces inscope.
-if ($null -eq $RGs_nExc){
+if ($null -eq $RGs_nExc) {
     write-host ("`nNo in-scope Resources Groups found. Stopping script run..." ) -ForegroundColor Yellow
     exit
 }
