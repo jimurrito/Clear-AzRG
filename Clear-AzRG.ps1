@@ -66,7 +66,7 @@ $RGs_nExc = (Get-AzResourceGroup -ErrorAction Stop) | Where-Object { $_.Resource
 #
 # Verbose
 write-host ("Excluded Resource Groups:" ) -ForegroundColor Green
-write-object $Exclude
+Write-Output $Exclude
 #
 # check to see if there are any resouces inscope.
 if ($null -eq $RGs_nExc) {
